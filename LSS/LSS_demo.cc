@@ -108,7 +108,23 @@ void LSSSquare(Mat &imgSRC, Mat &image)
 
 void LSSSquareBB(Mat &imgSRC, Mat &image)
 {
-	throw std::exception("The method or operation is not implemented.");
+	double start, duration_ms;
+	/************************************************************************/
+	/* LSS method to detect targets*/
+	/************************************************************************/
+	start = double(getTickCount());
+
+	std::vector<Rect> targets;
+	sd->detect(image, targets);
+
+	duration_ms = (double(getTickCount()) - start) * 1000 / getTickFrequency();
+	std::cout << "It took " << duration_ms << " ms. for "
+		<< targets.size() << " targets" << std::endl;
+
+	for (std::vector<Rect>::const_iterator it = targets.begin(); it != targets.end(); ++it)
+	{
+		rectangle(imgSRC, *it, Scalar(0, 255, 0), 2);
+	}
 }
 
 int main(int argc, char** argv)
@@ -130,9 +146,9 @@ int main(int argc, char** argv)
 
 	//LSSLShapeBB(imgSRC, image);
 
-	LSSSquare(imgSRC, image);
+	//LSSSquare(imgSRC, image);
 
-	//LSSSquareBB(imgSRC, image);
+	LSSSquareBB(imgSRC, image);
 
 	LSDlines(imgSRC, image);
 
