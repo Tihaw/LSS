@@ -114,7 +114,7 @@ void LSSSquareBB(Mat &imgSRC, Mat &image)
 int main(int argc, char** argv)
 {
 	std::string in;
-	cv::CommandLineParser parser(argc, argv, "{@input|EXP/combo1_20160923.tiff|input image}{help h||show help message}");
+	cv::CommandLineParser parser(argc, argv, "{@input|../../EXP/square.tiff|input image}{help h||show help message}");
 	if (parser.has("help"))
 	{
 		parser.printMessage();
@@ -126,11 +126,11 @@ int main(int argc, char** argv)
 	Mat image;
 	cv::cvtColor(imgSRC, image, CV_BGR2GRAY);
 
-	LSSLShape(imgSRC, image);
+	//LSSLShape(imgSRC, image);
 
 	//LSSLShapeBB(imgSRC, image);
 
-	//LSSSquare(imgSRC, image);
+	LSSSquare(imgSRC, image);
 
 	//LSSSquareBB(imgSRC, image);
 

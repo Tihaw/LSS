@@ -41,6 +41,7 @@ public:
 
 protected:
 private:
+	LShapeDetector& operator=(const LShapeDetector& rhs);//hide
 };
 
 /** @brief Creates a smart pointer to a LShapeDetector object and initializes it.

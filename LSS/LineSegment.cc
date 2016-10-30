@@ -38,12 +38,12 @@ void LineSegment::swap(LineSegment& rhs)
 LineSegment::~LineSegment()
 {	}
 	
-double LineSegment::CenterDistance(LineSegment &lineB) const
+double LineSegment::CenterDistance(const LineSegment &line) const
 {
 	return 	sqrt(
-		(this->centerX - lineB.centerX) * (this->centerX - lineB.centerX)
+		(this->centerX - line.centerX) * (this->centerX - line.centerX)
 		+
-		(this->centerY - lineB.centerY) * (this->centerY - lineB.centerY)
+		(this->centerY - line.centerY) * (this->centerY - line.centerY)
 		);
 }
 
@@ -191,4 +191,45 @@ double distance(double x1, double y1, double x2, double y2)
 {
 	return 	sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 };
+
+bool equalLength(double len1, double len2)
+{
+	const double lengthRatio = 0.2;
+
+	if (fabs(len1 - len2) / fabs(len1 + len2) < lengthRatio)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool equalAngle(double degree1, double degree2)
+{
+	const double angleAperture = 20;
+	if (fabs(degree1 - degree2) < angleAperture)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool identicalPoint(double x1, double y1, double x2, double y2, double objSize /*length1 + length2*/)
+{
+	const double ratio = 20;
+
+	if (fabs(x1 - x2) > (objSize / ratio))
+	{
+		return false;
+	}
+
+	if (fabs(y1 - y2) > (objSize / ratio))
+	{
+		return false;
+	}
+
+	return true;
+}
+
 } // namespace lss

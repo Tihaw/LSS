@@ -50,6 +50,7 @@ public:
 
 protected:
 private:
+	SquareDetector& operator=(const SquareDetector& rhs);
 };
 
 /** @brief Creates a smart pointer to a SquareDetector object and initializes it.

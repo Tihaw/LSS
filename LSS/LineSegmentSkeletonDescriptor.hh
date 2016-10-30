@@ -16,8 +16,6 @@ namespace lss
 /*scanBox size, stands for 180 degree*/
 const int ScanboxSize = 180;
 
-const int RightAngle = 90;
-
 /*reserve target num*/
 const int TargetNumReserve = 100;
 
@@ -56,6 +54,8 @@ protected:
 private:
 	/*evacuate lines and indexBox[LSS_SCANBOXSIZE]*/
 	void reset();
+
+	LineSegmentSkeletonDescriptor& operator=(const LineSegmentSkeletonDescriptor &rhs);//hide
 };
 } // namespace lss
 
