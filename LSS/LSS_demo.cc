@@ -130,7 +130,7 @@ void LSSSquareBB(Mat &imgSRC, Mat &image)
 int main(int argc, char** argv)
 {
 	std::string in;
-	cv::CommandLineParser parser(argc, argv, "{@input|../../EXP/square.tiff|input image}{help h||show help message}");
+	cv::CommandLineParser parser(argc, argv, "{@input|../../EXP/Metal1_20160923.tiff|input image}{help h||show help message}");
 	if (parser.has("help"))
 	{
 		parser.printMessage();

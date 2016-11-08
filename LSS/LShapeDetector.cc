@@ -10,24 +10,26 @@ LShapeDetector::LShapeDetector(int _scanWindowSize /*= 5*/,
 {
 }
 
-/*        class LShapeDetectorImpl			*/
+/*        class LShapeDetectorImpl			
+			a final/seal class
+*/
 class LShapeDetectorImpl : public LShapeDetector
 {
 public:
 	LShapeDetectorImpl(int _scanWindowSize = 5, int _maxLineNum = 1000);
 
-	virtual ~LShapeDetectorImpl();
+	~LShapeDetectorImpl();
 
 	size_t getDescriptorSize() const;
 	bool checkDetectorSize() const;
 		
 	/* this method find the bounding box of the location of target.
 	*/
-	virtual void detect(const Mat& img, CV_OUT vector<Rect>& boundingBoxes);
+	void detect(const Mat& img, CV_OUT vector<Rect>& boundingBoxes);
 
 	/* this method find the exact L shape location. which contains three vertex.
 	*/
-	virtual void detect(const Mat& img, CV_OUT vector<LShape>& lShapes);
+	void detect(const Mat& img, CV_OUT vector<LShape>& lShapes);
 
 protected:
 private:

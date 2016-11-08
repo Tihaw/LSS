@@ -87,24 +87,26 @@ bool parallelLine::goodLines4Square() const
 }
 
 
-/*        class SquareDetectorImpl			*/
+/*        class SquareDetectorImpl			
+			a final/seal class
+*/
 class SquareDetectorImpl : public SquareDetector
 {
 public:
 	SquareDetectorImpl(int _scanWindowSize = 5, int _maxLineNum = 1000);
 
-	virtual ~SquareDetectorImpl();
+	~SquareDetectorImpl();
 
 	size_t getDescriptorSize() const;
 	bool checkDetectorSize() const;
 		
 	/* this method find the bounding box of the location of target.
 	*/
-	virtual void detect(const Mat& img, CV_OUT vector<Rect>& boundingBox);
+	void detect(const Mat& img, CV_OUT vector<Rect>& boundingBox);
 
 	/* this method find the exact square shape location. which contains three vertex.
 	*/
-	virtual void detect(const Mat& img, CV_OUT vector<Square>& squares);
+	void detect(const Mat& img, CV_OUT vector<Square>& squares);
 
 protected:
 private:
