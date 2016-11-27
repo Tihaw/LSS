@@ -47,10 +47,10 @@
     <ClCompile Include="SquareDetector.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LSS_demo.cc">
+    <ClCompile Include="helper_debug.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="helper_debug.cc">
+    <ClCompile Include="LSS_demo.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

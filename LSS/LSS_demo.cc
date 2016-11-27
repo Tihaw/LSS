@@ -14,7 +14,7 @@ using lss::SquareDetector;
 Ptr<LShapeDetector> lsd = lss::createLShapeDetector(10, 1000);
 Ptr<SquareDetector> sd = lss::createSquareDetector(10, 1000);
 
-void LSDlines(Mat &imgSRC, Mat &image)
+void LSDlines(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
 	/************************************************************************/
@@ -38,7 +38,7 @@ void LSDlines(Mat &imgSRC, Mat &image)
 	}
 }
 
-void LSSLShape(Mat &imgSRC, Mat &image)
+void LSSLShape(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
 	/************************************************************************/
@@ -60,7 +60,7 @@ void LSSLShape(Mat &imgSRC, Mat &image)
 	}
 }
 
-void LSSLShapeBB(Mat &imgSRC, Mat &image)
+void LSSLShapeBB(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
 	/************************************************************************/
@@ -81,7 +81,7 @@ void LSSLShapeBB(Mat &imgSRC, Mat &image)
 	}
 }
 
-void LSSSquare(Mat &imgSRC, Mat &image)
+void LSSSquare(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
 
@@ -106,7 +106,7 @@ void LSSSquare(Mat &imgSRC, Mat &image)
 	}
 }
 
-void LSSSquareBB(Mat &imgSRC, Mat &image)
+void LSSSquareBB(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
 	/************************************************************************/
@@ -124,13 +124,15 @@ void LSSSquareBB(Mat &imgSRC, Mat &image)
 	for (std::vector<Rect>::const_iterator it = targets.begin(); it != targets.end(); ++it)
 	{
 		rectangle(imgSRC, *it, Scalar(0, 255, 0), 2);
+
+		Rect tmp = (*it) & (*it);
 	}
 }
 
 int main(int argc, char** argv)
 {
 	std::string in;
-	cv::CommandLineParser parser(argc, argv, "{@input|../../EXP/Metal1_20160923.tiff|input image}{help h||show help message}");
+	cv::CommandLineParser parser(argc, argv, "{@input|../../EXP/combo0_20160923.tiff|input image}{help h||show help message}");
 	if (parser.has("help"))
 	{
 		parser.printMessage();
@@ -144,11 +146,11 @@ int main(int argc, char** argv)
 
 	//LSSLShape(imgSRC, image);
 
-	//LSSLShapeBB(imgSRC, image);
+	LSSLShapeBB(imgSRC, image);
 
 	//LSSSquare(imgSRC, image);
 
-	LSSSquareBB(imgSRC, image);
+	//LSSSquareBB(imgSRC, image);
 
 	LSDlines(imgSRC, image);
 
