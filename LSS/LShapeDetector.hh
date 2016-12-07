@@ -10,7 +10,7 @@ namespace lss
 /* "L" shape structure, vertex[0]\	vertex[1]\	vertex[2]\
 						A point		corner		B point
 						*/
-struct LShape
+struct CV_EXPORTS_W LShape
 {
 	Point2d vertex[3];
 	void clear()

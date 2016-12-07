@@ -17,6 +17,8 @@ Ptr<SquareDetector> sd = lss::createSquareDetector(10, 1000);
 void LSDlines(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
+	
+	std::cout << "LSDlines: ";
 	/************************************************************************/
 	/* LSD method to detect lines*/
 	/************************************************************************/
@@ -41,6 +43,8 @@ void LSDlines(Mat &imgSRC, const Mat &image)
 void LSSLShape(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
+
+	std::cout << "LSSLShape: ";
 	/************************************************************************/
 	/* LSS method to detect L shapes*/
 	/************************************************************************/
@@ -63,6 +67,8 @@ void LSSLShape(Mat &imgSRC, const Mat &image)
 void LSSLShapeBB(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
+	
+	std::cout << "LSSLShapeBB: ";
 	/************************************************************************/
 	/* LSS method to detect targets*/
 	/************************************************************************/
@@ -85,6 +91,7 @@ void LSSSquare(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
 
+	std::cout << "LSSSquare: ";
 	/************************************************************************/
 	/* LSS method to detect square shapes*/
 	/************************************************************************/
@@ -109,6 +116,8 @@ void LSSSquare(Mat &imgSRC, const Mat &image)
 void LSSSquareBB(Mat &imgSRC, const Mat &image)
 {
 	double start, duration_ms;
+
+	std::cout << "LSSSquareBB: ";
 	/************************************************************************/
 	/* LSS method to detect targets*/
 	/************************************************************************/
@@ -132,7 +141,7 @@ void LSSSquareBB(Mat &imgSRC, const Mat &image)
 int main(int argc, char** argv)
 {
 	std::string in;
-	cv::CommandLineParser parser(argc, argv, "{@input|../../EXP/combo0_20160923.tiff|input image}{help h||show help message}");
+	cv::CommandLineParser parser(argc, argv, "{@input||input image}{help h||show help message}");
 	if (parser.has("help"))
 	{
 		parser.printMessage();
@@ -144,9 +153,9 @@ int main(int argc, char** argv)
 	Mat image;
 	cv::cvtColor(imgSRC, image, CV_BGR2GRAY);
 
-	//LSSLShape(imgSRC, image);
+	LSSLShape(imgSRC, image);
 
-	LSSLShapeBB(imgSRC, image);
+	//LSSLShapeBB(imgSRC, image);
 
 	//LSSSquare(imgSRC, image);
 

@@ -18,7 +18,7 @@ namespace lss
 /* |		           |*/
 /* vert1---------------vert2 */
 /************************************************************************/
-struct Square
+struct CV_EXPORTS_W Square
 {
 	cv::Point2d vertex[4];
 	void clear()
