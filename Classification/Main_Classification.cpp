@@ -7,6 +7,7 @@
 #include <ml.hpp>
 
 #include "DataMatrixClassification.hh"
+#include "../Train/HOGparameters.h"
 
 using std::cout;
 using std::endl;
@@ -16,14 +17,6 @@ using std::vector;
 
 using cv::Ptr;
 using cv::Size;
-
-//HOG params keep with train
-Size win_size(50, 50);
-Size block_size(10, 10);
-Size block_stride(10, 10);
-Size cell_size(5, 5);
-int nbins = 9;
-
 
 int main(int argc, char** argv)
 {

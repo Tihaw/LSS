@@ -1,10 +1,11 @@
 /************************************************************************/
 /* this is an program for train SVM with HOG features                    
-	revised from opencv sample*/
+	revised from OpenCV sample*/
 /************************************************************************/
 #include <string>
 #include <vector>
 
+#include "HOGparameters.h"
 #include "Train.hh"
 
 using cv::Mat;
@@ -13,11 +14,6 @@ using std::string;
 using std::cout;
 using std::endl;
 
-Size win_size(50,50);
-Size block_size(10,10);
-Size block_stride(10,10);
-Size cell_size(5,5);
-int nbins = 9;
 string fname("SVM_DATA.xml");
 
 int main(int argc, char** argv)
@@ -29,10 +25,12 @@ int main(int argc, char** argv)
 		parser.printMessage();
 		exit(0);
 	}
+
 	vector< Mat > pos_lst;
 	vector< Mat > neg_lst;
 	vector< Mat > gradient_lst;
 	vector< int > labels;
+
 	string pos_dir = parser.get<string>("pd");
 	string pos = parser.get<string>("p");
 	string neg_dir = parser.get<string>("nd");
@@ -47,6 +45,7 @@ int main(int argc, char** argv)
 
 	load_images(pos_dir, pos, pos_lst);
 	labels.assign(pos_lst.size(), +1);
+
 	const unsigned int old = (unsigned int)labels.size();
 	load_images(neg_dir, neg, neg_lst);
 	labels.insert(labels.end(), neg_lst.size(), -1);
@@ -56,6 +55,8 @@ int main(int argc, char** argv)
 	compute_hog(neg_lst, gradient_lst, win_size, block_size, block_stride, cell_size, nbins);
 
 	train_svm(gradient_lst, labels, fname);
+
+	//test_it(win_size, block_size, block_stride, cell_size, nbins);
 
 	return 0;
 }

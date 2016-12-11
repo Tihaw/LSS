@@ -10,12 +10,11 @@ using std::clog;
 using std::endl;
 using std::ifstream;
 using cv::ml::SVM;
-
+using cv::ml::TrainData;
 
 Mat get_hogdescriptor_visu(const Mat& color_origImg, vector<float>& descriptorValues, const Size & size);
 
 void convert_to_ml(const std::vector< cv::Mat > & train_samples, cv::Mat& trainData);
-
 
 void load_images(const string & prefix, const string & filename, vector< Mat > & img_lst)
 {
@@ -89,12 +88,10 @@ void train_svm(const vector< Mat > & gradient_lst, const vector< int > & labels,
 	Mat train_data;
 	convert_to_ml(gradient_lst, train_data);
 
-	clog << "Start training... \n";
 	Ptr<SVM> svm = SVM::create();
-	clog << "Using One-Class classification and trainAuto()\n";
-
-	//svm->setType(SVM::C_SVC);
-	svm->setCoef0(0.0);
+	clog << "Start training... trainAuto() \n";
+	//non-auto train way
+/*	svm->setCoef0(0.0);
 	svm->setDegree(3);
 	svm->setTermCriteria(TermCriteria(CV_TERMCRIT_ITER + CV_TERMCRIT_EPS, 1000, 1e-3));
 	svm->setGamma(0);
@@ -102,8 +99,13 @@ void train_svm(const vector< Mat > & gradient_lst, const vector< int > & labels,
 	svm->setNu(0.5);
 	svm->setP(0.1); // for EPSILON_SVR, epsilon in loss function?
 	svm->setC(0.01); // From paper, soft classifier
-	svm->setType(SVM::EPS_SVR); // C_SVC; // EPSILON_SVR; // may be also NU_SVR; // do regression task
-	svm->train(train_data, ml::ROW_SAMPLE, Mat(labels));
+	svm->train(train_data, ml::ROW_SAMPLE, Mat(labels));*/
+
+	Ptr<TrainData> trainData_Auto = TrainData::create(train_data, ml::ROW_SAMPLE, labels);;
+
+	svm->setKernel(SVM::LINEAR);
+	svm->trainAuto(trainData_Auto);
+
 	clog << "...[done]" << endl;
 
 	svm->save(savename);
@@ -341,41 +343,49 @@ void test_it(const Size & _winSize, const Size & _blockSize, const Size & _block
 	Scalar trained(0, 0, 255);
 	Mat img, draw;
 	Ptr<SVM> svm;
-	HOGDescriptor hog;
 	HOGDescriptor my_hog(_winSize, _blockSize, _blockStride, _cellSize, _nbins);
 	vector< Rect > locations;
 
 	// Load the trained SVM.
 	svm = ml::StatModel::load<SVM>("SVM_DATA.xml");
 	// Set the trained svm to my_hog
-	vector< float > hog_detector;
-	get_svm_detector(svm, hog_detector);
-	my_hog.setSVMDetector(hog_detector);
-	// Set the people detector.
-	hog.setSVMDetector(hog.getDefaultPeopleDetector());
-	// Open the camera.
+// 	vector< float > hog_detector;
+// 	get_svm_detector(svm, hog_detector);
+// 	my_hog.setSVMDetector(hog_detector);
 
 
 	img = imread("D:/TihawFiles/code/DMcodeBin/longDistance_DM_barcode/longDistance_DM_barcode/DMset-rectified/test/132.bmp");
-	Mat img2 = imread("D:/TihawFiles/code/DMcodeBin/longDistance_DM_barcode/longDistance_DM_barcode/DMset-rectified/test/testf.tiff");
+	Mat img2 = imread("D:/TihawFiles/code/DMcodeBin/longDistance_DM_barcode/longDistance_DM_barcode/DMset-rectified/test/137.bmp");
+	Mat img3 = imread("D:/TihawFiles/code/DMcodeBin/longDistance_DM_barcode/longDistance_DM_barcode/DMset-rectified/test/142.bmp");
+	Mat img4 = imread("D:/TihawFiles/code/DMcodeBin/longDistance_DM_barcode/longDistance_DM_barcode/DMset-rectified/test/147.bmp");
+
 		if (img.empty())
 			return;
 
 		draw = img.clone();
-
-		locations.clear();
-		hog.detectMultiScale(img, locations);
-		draw_locations(draw, locations, reference);
+		
 
 		locations.clear();
 
 		vector<float> hogfeature;
 		my_hog.compute(img, hogfeature);
+
 		float a = svm->predict(hogfeature);
 		cout << a << endl;
 
 		hogfeature.clear();
 		my_hog.compute(img2, hogfeature);
+		a = svm->predict(hogfeature);
+		cout << a << endl;
+
+
+		hogfeature.clear();
+		my_hog.compute(img3, hogfeature);
+		a = svm->predict(hogfeature);
+		cout << a << endl;
+
+		hogfeature.clear();
+		my_hog.compute(img4, hogfeature);
 		a = svm->predict(hogfeature);
 		cout << a << endl;
 

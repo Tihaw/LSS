@@ -54,7 +54,7 @@ protected:
 private:
 	/*evacuate lines and indexBox[LSS_SCANBOXSIZE]*/
 	void reset();
-
+	
 	LineSegmentSkeletonDescriptor& operator=(const LineSegmentSkeletonDescriptor &rhs);//hide
 };
 } // namespace lss
