@@ -44,6 +44,7 @@ void lss::LineSegmentSkeletonDescriptor::prepareWork(const Mat& img)
 
 	//LSD algorithm for detecting straight lines
 	vector<cv::Vec4f> lsd_lines;
+	lsd_lines.reserve(MAXLINENUM);
 	ls->detect(image, lsd_lines);
 
 	//evacuate vectors

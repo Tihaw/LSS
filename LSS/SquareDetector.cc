@@ -141,6 +141,7 @@ void SquareDetectorImpl::detect(const Mat& img, CV_OUT vector<Rect>& boundingBox
 	vector<Square> squares;
 	squares.reserve(TargetNumReserve);
 	detect(img, squares);
+	boundingBox.reserve(TargetNumReserve);
 	
 	double x_min, y_min, x_max, y_max, length;
 	//get the bounding box of each L shape

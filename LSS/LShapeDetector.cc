@@ -59,31 +59,42 @@ CV_EXPORTS_W cv::Ptr<LShapeDetector> lss::createLShapeDetector(int _scanWindowSi
 	return cv::makePtr<LShapeDetectorImpl>(_scanWindowSize, _maxLineNum);
 }
 
-void LShapeDetectorImpl::detect(const Mat& img, CV_OUT vector<Rect>& boundingBoxes)
+void LShapeDetectorImpl::detect(const Mat& img, CV_OUT vector<Rect>& boundingBox)
 {
 	//call detect, find "L" shape first
 	vector<LShape> lShapes;
 	lShapes.reserve(TargetNumReserve);
 	detect(img, lShapes);
+	boundingBox.reserve(TargetNumReserve);
 
 	double x_min, y_min, x_max, y_max, length;
 	//get the bounding box of each L shape
 	for (std::vector<LShape>::const_iterator it = lShapes.begin();
 		it != lShapes.end(); ++it)
 	{
+		Point2d center, far;
+		center.x = (it->vertex[0].x + it->vertex[2].x) / 2;
+		center.y = (it->vertex[0].y + it->vertex[2].y) / 2;
+
+		far.x = 2 * center.x - it->vertex[1].x;
+		far.y = 2 * center.y - it->vertex[1].y;
+
 		x_min = std::min(it->vertex[0].x, it->vertex[1].x);
 		x_min = std::min(x_min, it->vertex[2].x);
+		x_min = std::min(x_min, far.x);
 		y_min = std::min(it->vertex[0].y, it->vertex[1].y);
 		y_min = std::min(y_min, it->vertex[2].y);
-
+		y_min = std::min(y_min, far.y);
 		x_max = std::max(it->vertex[0].x, it->vertex[1].x);
 		x_max = std::max(x_max, it->vertex[2].x);
+		x_max = std::max(x_max, far.x);
 		y_max = std::max(it->vertex[0].y, it->vertex[1].y);
 		y_max = std::max(y_max, it->vertex[2].y);
+		y_max = std::max(y_max, far.y);
 
 		length = std::max(x_max - x_min, y_max - y_min);
 
-		boundingBoxes.push_back(cv::Rect_<double>(x_min, y_min, length, length));
+		boundingBox.push_back(cv::Rect_<double>(x_min, y_min, length, length));
 	}
 }
 

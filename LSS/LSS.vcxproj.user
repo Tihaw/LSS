@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>--pd=D:\TihawFiles\code\DMcodeBin\longDistance_DM_barcode\longDistance_DM_barcode\DMset-rectified\train\positive\highcontrast(plastic...)\ -p=pos.lst --nd=D:\TihawFiles\code\DMcodeBin\longDistance_DM_barcode\longDistance_DM_barcode\DMset-rectified\train\negative\v310\ -n=neg.lst</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>../../EXP/Paper1_20160923.tiff</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
