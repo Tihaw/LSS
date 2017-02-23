@@ -208,7 +208,7 @@ void drawBoundingBox(const list<targetConfidence> &targtRectsWithConfdc, Mat &im
 	for (list<targetConfidence>::const_iterator it = targtRectsWithConfdc.begin();
 		it != targtRectsWithConfdc.end(); ++it)
 	{
-		cv::rectangle(img, it->boundingBox, green, 1);
+		cv::rectangle(img, it->boundingBox, green, 3);
 	}
 }
 
@@ -299,6 +299,9 @@ void searchTarget(const Mat &img, const Size &win_size, const Ptr<SVM> &svm, con
 	list<targetConfidence> targtRectsWithConfdc;//will shrink to contain only true targets
 	targetConfidence tmpTC;
 	Point2f imgLshape[3];
+
+	double t = (double)getTickCount();//time recording
+
 	for (vector< LShape >::const_iterator lshapeIt = lshapes.begin(); lshapeIt != lshapes.end(); ++lshapeIt)
 	{
 		cout << "\r" << count++ << "/" << lshapes.size();
@@ -335,6 +338,8 @@ void searchTarget(const Mat &img, const Size &win_size, const Ptr<SVM> &svm, con
 	//do non max suppression
 	nms_pickDmtxRects(targtRectsWithConfdc);
 
+	t = ((double)getTickCount() - t) / getTickFrequency();
+	cout << endl << "time consumed " << t * 1000 << " ms" << endl;
 	cout << endl << "find " << targtRectsWithConfdc.size() << " DataMatrix codes" << endl;
 
 	drawBoundingBox(targtRectsWithConfdc, show);

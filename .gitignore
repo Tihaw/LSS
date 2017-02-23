@@ -13,6 +13,17 @@
 *.jpg
 *.bmp
 
+#ignore data files
+*.lst
+*.xml
+
 #ignore debug and release folder
 x64/
+Debug/
 LSS/x64/
+LSS/Debug/
+LSS/Release/
+Classification/Debug/
+Classification/Release/
+Train/Debug/
+Train/Release/
